@@ -40,9 +40,7 @@ export const likeCard = (req: any, res: Response) => {
   )
     .then((cardLike) => res.status(OK).send(cardLike))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        res.status(BAD_REQUEST).send({ message: 'Переданы некорректные данные для постановки/снятии лайка' });
-      } else if (err.name === 'CastError') {
+      if (err.name === 'CastError') {
         res.status(NOT_FOUND).send({ message: 'Передан несуществующий _id карточки' });
       } else {
         res.status(SERVER_ERROR).send({ message: res.statusMessage });
@@ -58,9 +56,7 @@ export const dislikeCard = (req: any, res: Response) => {
   )
     .then((cardDislike) => res.status(OK).send(cardDislike))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        res.status(BAD_REQUEST).send({ message: 'Переданы некорректные данные для постановки/снятии лайка' });
-      } else if (err.name === 'CastError') {
+      if (err.name === 'CastError') {
         res.status(NOT_FOUND).send({ message: 'Передан несуществующий _id карточки' });
       } else {
         res.status(SERVER_ERROR).send({ message: res.statusMessage });
