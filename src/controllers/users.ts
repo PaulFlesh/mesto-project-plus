@@ -18,7 +18,7 @@ export const getUser = (req: Request, res: Response) => {
     .then((userInfo) => res.status(OK).send(userInfo))
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(NOT_FOUND).send({ message: 'Пользователь по указанному _id не найден' });
+        res.status(NOT_FOUND).send({ message: 'Пользователь не найден' });
       } else {
         res.status(SERVER_ERROR).send({ message: res.statusMessage });
       }
@@ -49,8 +49,6 @@ export const updateUser = (req: any, res: Response) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(BAD_REQUEST).send({ message: 'Переданы некорректные данные при обновлении профиля' });
-      } else if (err.name === 'CastError') {
-        res.status(NOT_FOUND).send({ message: 'Пользователь по указанному _id не найден' });
       } else {
         res.status(SERVER_ERROR).send({ message: res.statusMessage });
       }
@@ -68,8 +66,6 @@ export const updateUserAvatar = (req: any, res: Response) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(BAD_REQUEST).send({ message: 'Переданы некорректные данные при обновлении аватара' });
-      } else if (err.name === 'CastError') {
-        res.status(NOT_FOUND).send({ message: 'Пользователь с указанным _id не найден' });
       } else {
         res.status(BAD_REQUEST).send({ message: res.statusMessage });
       }
