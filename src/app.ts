@@ -2,6 +2,7 @@ import express, { Response } from 'express';
 import mongoose from 'mongoose';
 import cardRouter from './routes/cards';
 import userRouter from './routes/users';
+import { NOT_FOUND } from 'constants/codes';
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -18,5 +19,9 @@ app.use((req: any, res: Response, next) => {
 
 app.use('/cards', cardRouter);
 app.use('/users', userRouter);
+
+app.use((req: Request, res: Response) => {
+  res.status(NOT_FOUND).send({ message: 'Запрашиваемый ресурс не найден' });
+});
 
 app.listen(PORT);
