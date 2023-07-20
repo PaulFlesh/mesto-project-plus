@@ -10,7 +10,7 @@ import {
 export const getUsers = (req: Request, res: Response) => {
   user.find({})
     .then((users) => res.status(OK).send(users))
-    .catch(() => res.status(SERVER_ERROR).send({ message: res.statusMessage }));
+    .catch(() => res.status(SERVER_ERROR).send({ message: 'На сервере произошла ошибка' }));
 };
 
 export const getUser = (req: Request, res: Response) => {
@@ -20,7 +20,7 @@ export const getUser = (req: Request, res: Response) => {
       if (err.name === 'DocumentNotFoundError') {
         res.status(NOT_FOUND).send({ message: 'Пользователь не найден' });
       } else {
-        res.status(SERVER_ERROR).send({ message: res.statusMessage });
+        res.status(SERVER_ERROR).send({ message: 'На сервере произошла ошибка' });
       }
     });
 };
@@ -33,7 +33,7 @@ export const createUser = (req: Request, res: Response) => {
       if (err.name === 'ValidationError') {
         res.status(BAD_REQUEST).send({ message: 'Переданы некорректные данные при создании пользователя' });
       } else {
-        res.status(SERVER_ERROR).send({ message: res.statusMessage });
+        res.status(SERVER_ERROR).send({ message: 'На сервере произошла ошибка' });
       }
     });
 };
@@ -50,7 +50,7 @@ export const updateUser = (req: any, res: Response) => {
       if (err.name === 'ValidationError') {
         res.status(BAD_REQUEST).send({ message: 'Переданы некорректные данные при обновлении профиля' });
       } else {
-        res.status(SERVER_ERROR).send({ message: res.statusMessage });
+        res.status(SERVER_ERROR).send({ message: 'На сервере произошла ошибка' });
       }
     });
 };
@@ -67,7 +67,7 @@ export const updateUserAvatar = (req: any, res: Response) => {
       if (err.name === 'ValidationError') {
         res.status(BAD_REQUEST).send({ message: 'Переданы некорректные данные при обновлении аватара' });
       } else {
-        res.status(BAD_REQUEST).send({ message: res.statusMessage });
+        res.status(SERVER_ERROR).send({ message: 'На сервере произошла ошибка' });
       }
     });
 };

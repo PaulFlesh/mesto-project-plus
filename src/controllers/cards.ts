@@ -10,7 +10,7 @@ import {
 export const getCards = (req: Request, res: Response) => {
   card.find({})
     .then((cards) => res.status(OK).send(cards))
-    .catch(() => res.status(SERVER_ERROR).send({ message: res.statusMessage }));
+    .catch(() => res.status(SERVER_ERROR).send({ message: 'На сервере произошла ошибка' }));
 };
 
 export const createCard = (req: Request, res: Response) => {
@@ -21,15 +21,21 @@ export const createCard = (req: Request, res: Response) => {
       if (err.name === 'ValidationError') {
         res.status(BAD_REQUEST).send({ message: 'Переданы некорректные данные при создании карточки' });
       } else {
-        res.status(SERVER_ERROR).send({ message: res.statusMessage });
+        res.status(SERVER_ERROR).send({ message: 'На сервере произошла ошибка' });
       }
     });
 };
 
 export const deleteCard = (req: Request, res: Response) => {
-  card.findByIdAndRemove(req.params.cardId)
+  card.findByIdAndRemove(req.params.cardId).orFail()
     .then((deletedCard) => res.status(OK).send(deletedCard))
-    .catch(() => res.status(NOT_FOUND).send({ message: 'Карточка с указанным _id не найдена' }));
+    .catch((err) => {
+      if (err.name === 'DocumentNotFoundError') {
+        res.status(NOT_FOUND).send({ message: 'Карточка не найдена' });
+      } else {
+        res.status(SERVER_ERROR).send({ message: 'На сервере произошла ошибка' });
+      }
+    });
 };
 
 export const likeCard = (req: any, res: Response) => {
@@ -43,7 +49,7 @@ export const likeCard = (req: any, res: Response) => {
       if (err.name === 'DocumentNotFoundError') {
         res.status(NOT_FOUND).send({ message: 'Карточка не найдена' });
       } else {
-        res.status(SERVER_ERROR).send({ message: res.statusMessage });
+        res.status(SERVER_ERROR).send({ message: 'На сервере произошла ошибка' });
       }
     });
 };
@@ -59,7 +65,7 @@ export const dislikeCard = (req: any, res: Response) => {
       if (err.name === 'DocumentNotFoundError') {
         res.status(NOT_FOUND).send({ message: 'Карточка не найдена' });
       } else {
-        res.status(SERVER_ERROR).send({ message: res.statusMessage });
+        res.status(SERVER_ERROR).send({ message: 'На сервере произошла ошибка' });
       }
     });
 };
