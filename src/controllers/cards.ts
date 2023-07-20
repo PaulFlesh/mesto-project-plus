@@ -37,11 +37,11 @@ export const likeCard = (req: any, res: Response) => {
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
     { new: true, runValidators: true },
-  )
+  ).orFail()
     .then((cardLike) => res.status(OK).send(cardLike))
     .catch((err) => {
-      if (err.name === 'CastError') {
-        res.status(NOT_FOUND).send({ message: 'Передан несуществующий _id карточки' });
+      if (err.name === 'DocumentNotFoundError') {
+        res.status(NOT_FOUND).send({ message: 'Карточка не найдена' });
       } else {
         res.status(SERVER_ERROR).send({ message: res.statusMessage });
       }
@@ -53,11 +53,11 @@ export const dislikeCard = (req: any, res: Response) => {
     req.params.cardId,
     { $pull: { likes: req.user._id } },
     { new: true },
-  )
+  ).orFail()
     .then((cardDislike) => res.status(OK).send(cardDislike))
     .catch((err) => {
-      if (err.name === 'CastError') {
-        res.status(NOT_FOUND).send({ message: 'Передан несуществующий _id карточки' });
+      if (err.name === 'DocumentNotFoundError') {
+        res.status(NOT_FOUND).send({ message: 'Карточка не найдена' });
       } else {
         res.status(SERVER_ERROR).send({ message: res.statusMessage });
       }

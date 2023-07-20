@@ -14,10 +14,10 @@ export const getUsers = (req: Request, res: Response) => {
 };
 
 export const getUser = (req: Request, res: Response) => {
-  user.findById(req.params.userId)
+  user.findById(req.params.userId).orFail()
     .then((userInfo) => res.status(OK).send(userInfo))
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err.name === 'DocumentNotFoundError') {
         res.status(NOT_FOUND).send({ message: 'Пользователь не найден' });
       } else {
         res.status(SERVER_ERROR).send({ message: res.statusMessage });
