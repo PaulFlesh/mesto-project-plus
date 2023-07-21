@@ -32,6 +32,8 @@ export const deleteCard = (req: Request, res: Response) => {
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
         res.status(NOT_FOUND).send({ message: 'Карточка не найдена' });
+      } else if (err.name === 'CastError') {
+        res.status(NOT_FOUND).send({ message: 'Передан невалидный _id' });
       } else {
         res.status(SERVER_ERROR).send({ message: 'На сервере произошла ошибка' });
       }
@@ -48,6 +50,8 @@ export const likeCard = (req: any, res: Response) => {
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
         res.status(NOT_FOUND).send({ message: 'Карточка не найдена' });
+      } else if (err.name === 'CastError') {
+        res.status(NOT_FOUND).send({ message: 'Передан невалидный _id' });
       } else {
         res.status(SERVER_ERROR).send({ message: 'На сервере произошла ошибка' });
       }
@@ -64,6 +68,8 @@ export const dislikeCard = (req: any, res: Response) => {
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
         res.status(NOT_FOUND).send({ message: 'Карточка не найдена' });
+      } else if (err.name === 'CastError') {
+        res.status(NOT_FOUND).send({ message: 'Передан невалидный _id' });
       } else {
         res.status(SERVER_ERROR).send({ message: 'На сервере произошла ошибка' });
       }

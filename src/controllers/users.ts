@@ -19,6 +19,8 @@ export const getUser = (req: Request, res: Response) => {
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
         res.status(NOT_FOUND).send({ message: 'Пользователь не найден' });
+      } else if (err.name === 'CastError') {
+        res.status(NOT_FOUND).send({ message: 'Передан невалидный _id' });
       } else {
         res.status(SERVER_ERROR).send({ message: 'На сервере произошла ошибка' });
       }
