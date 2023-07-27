@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
+import validator from 'validator';
 
 interface ICard {
   name: string,
   link: string,
-  owner: any,
-  likes: any,
+  owner: mongoose.Schema.Types.ObjectId,
+  likes: mongoose.Schema.Types.ObjectId[],
   createdAt: Date,
 }
 
@@ -18,6 +19,10 @@ const CardSchema = new mongoose.Schema<ICard>({
   link: {
     type: String,
     required: true,
+    validate: {
+      validator: (avatar: string) => validator.isURL(avatar, { protocols: ['http', 'https'] }),
+      message: 'Некорректная ссылка',
+    },
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
