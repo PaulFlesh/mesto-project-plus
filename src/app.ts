@@ -25,6 +25,13 @@ app.post('/signup', createUserValidation, createUser);
 app.use('/cards', cardRouter);
 app.use('/users', userRouter);
 
+// delete after review
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 app.use((req: Request, res: Response, next: NextFunction) => {
   next(new NotFound('Запрашиваемый ресурс не найден'));
 });
