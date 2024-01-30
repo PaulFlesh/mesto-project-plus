@@ -19,18 +19,18 @@ mongoose.connect('mongodb://localhost:27017/mestodb');
 
 app.use(requestLogger);
 
-app.post('/signin', loginValidation, login);
-app.post('/signup', createUserValidation, createUser);
-
-app.use('/cards', cardRouter);
-app.use('/users', userRouter);
-
 // delete after review
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
+
+app.post('/signin', loginValidation, login);
+app.post('/signup', createUserValidation, createUser);
+
+app.use('/cards', cardRouter);
+app.use('/users', userRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   next(new NotFound('Запрашиваемый ресурс не найден'));
