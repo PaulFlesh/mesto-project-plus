@@ -16,3 +16,9 @@ node_modules
 
 # Typescript build result
 dist
+
+# Bash scripts
+.sh
+
+# Dotenv files
+.env
