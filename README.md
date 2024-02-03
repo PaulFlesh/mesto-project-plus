@@ -2,6 +2,6 @@
 
 IP: 178.154.203.11
 
-Frontend: https://mesto.nomoredomainsmonster.ru
+Frontend: https://mesto.students.nomoredomainsmonster.ru
 
-Backend: https://api.mesto.nomoredomainsmonster.ru
+Backend: https://api.mesto.students.nomoredomainsmonster.ru
