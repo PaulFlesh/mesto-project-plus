@@ -1,8 +1,5 @@
-# Бэкенд Mesto. Каркас API Mesto
+# Деплой приложения Mesto
 
-## Используемые технологии и решения
-- Typescript в качестве основного языка проекта
-- Mongodb и ODM Mongoose для хранения данных пользователей
-- Node.js в качестве среды выполнения
-
-Перед отправкой работы на проверку убедитесь что она соответствует требованиям проектной работы
+IP: 178.154.203.11
+Frontend: https://mesto.nomoredomainsmonster.ru
+Backend: https://api.mesto.nomoredomainsmonster.ru
