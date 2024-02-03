@@ -1,5 +1,7 @@
+import 'dotenv/config';
 import express, { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import { errors } from 'celebrate';
 import NotFound from './errors/NotFound';
 import cardRouter from './routes/cards';
@@ -9,7 +11,7 @@ import { requestLogger, errorLogger } from './middlewares/logger';
 import { login, createUser } from './controllers/users';
 import { createUserValidation, loginValidation } from './utils/validation';
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 const app = express();
 
 app.use(express.json());
@@ -17,6 +19,12 @@ app.use(express.urlencoded({ extended: true }));
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 
+app.use(cors({
+  origin: [
+    'http://mesto.nomoredomainsmonster.ru',
+    'https://mesto.nomoredomainsmonster.ru'
+  ],
+}));
 app.use(requestLogger);
 
 // delete after review
