@@ -6,6 +6,7 @@ import { errors } from 'celebrate';
 import NotFound from './errors/NotFound';
 import cardRouter from './routes/cards';
 import userRouter from './routes/users';
+import auth from './middlewares/auth';
 import errorsMiddleware from './middlewares/errors';
 import { requestLogger, errorLogger } from './middlewares/logger';
 import { login, createUser } from './controllers/users';
@@ -36,6 +37,8 @@ app.get('/crash-test', () => {
 
 app.post('/signin', loginValidation, login);
 app.post('/signup', createUserValidation, createUser);
+
+app.use(auth);
 
 app.use('/cards', cardRouter);
 app.use('/users', userRouter);

@@ -104,12 +104,10 @@ export const updateUserAvatar = (req: Request, res: Response, next: NextFunction
 
 export const login = (req: Request, res: Response, next: NextFunction) => { // any
   const { email, password } = req.body;
-  user.findUserByCredentials(email, password)
+  return user.findUserByCredentials(email, password)
     .then((userInfo: any) => {
       const token = jwt.sign({ _id: userInfo._id }, 'super-strong-secret', { expiresIn: '7d' });
-      res.cookie('jwt', `Bearer: ${token}`, {
-        maxAge: 3600000 * 24 * 7
-      }).end();
+      res.send({ token: token });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
