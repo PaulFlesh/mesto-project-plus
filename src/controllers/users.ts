@@ -107,12 +107,9 @@ export const login = (req: Request, res: Response, next: NextFunction) => { // a
   user.findUserByCredentials(email, password)
     .then((userInfo: any) => {
       const token = jwt.sign({ _id: userInfo._id }, 'super-strong-secret', { expiresIn: '7d' });
-      res.set({
-        'Set-Cookie': `token=${token}`,
-      });
-      res.send({
-        token: token,
-      });
+      res.cookie('jwt', `Bearer: ${token}`, {
+        maxAge: 3600000 * 24 * 7
+      }).end();
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
