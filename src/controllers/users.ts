@@ -107,6 +107,7 @@ export const login = (req: Request, res: Response, next: NextFunction) => { // a
   return user.findUserByCredentials(email, password)
     .then((userInfo: any) => {
       const token = jwt.sign({ _id: userInfo._id }, 'super-strong-secret', { expiresIn: '7d' });
+      res.set({ 'Set-Cookie': `token=${token}` });
       res.send({ token: token });
     })
     .catch((err) => {
