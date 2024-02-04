@@ -104,7 +104,7 @@ export const updateUserAvatar = (req: Request, res: Response, next: NextFunction
 
 export const login = (req: Request, res: Response, next: NextFunction) => { // any
   const { email, password } = req.body;
-  user.find(email, password)
+  user.findUserByCredentials(email, password)
     .then((userInfo: any) => {
       res.send({
         token: jwt.sign({ _id: userInfo._id }, 'super-strong-secret', { expiresIn: '7d' }),
