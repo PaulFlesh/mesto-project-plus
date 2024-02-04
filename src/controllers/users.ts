@@ -107,13 +107,11 @@ export const login = (req: Request, res: Response, next: NextFunction) => { // a
   return user.findUserByCredentials(email, password)
     .then((userInfo: any) => {
       const token = jwt.sign({ _id: userInfo._id }, 'super-strong-secret', { expiresIn: '7d' });
-      console.log(`userInfo._id: ${userInfo._id}`);
-      console.log(`token: ${token}`);
+      alert(`userInfo._id: ${userInfo._id}, token: ${token}`);
       res.cookie('token', token);
       res.set({ 'Set-Cookie': `token=${token}` });
       res.send({ token: token });
-      console.log(`document.cookie: ${document.cookie}`);
-      console.log(res);
+      alert(`document.cookie: ${document.cookie}, res: ${res}`);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
