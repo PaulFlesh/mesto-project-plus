@@ -21,6 +21,7 @@ export const getUser = (req: Request, res: Response, next: NextFunction) => {
       if (err.name === 'DocumentNotFoundError') {
         next(new NotFound('Пользователь не найден'));
       } else if (err.name === 'CastError') {
+        console.log(req.params.userId);
         next(new NotFound('Передан невалидный _id'));
       } else {
         next(err);
@@ -35,6 +36,7 @@ export const getCurrentUser = (req: Request, res: Response, next: NextFunction) 
       if (err.name === 'DocumentNotFoundError') {
         next(new NotFound('Пользователь не найден'));
       } else if (err.name === 'CastError') {
+        console.log(req.params.userId);
         next(new NotFound('Передан невалидный _id'));
       } else {
         next(err);
