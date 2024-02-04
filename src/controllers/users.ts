@@ -8,6 +8,8 @@ import BadRequest from '../errors/BadRequest';
 import Conflict from '../errors/Conflict';
 import Unathorized from '../errors/Unauthorized';
 
+const { JWT_SECRET } = require('../config');
+
 export const getUsers = (req: Request, res: Response, next: NextFunction) => {
   user.find({})
     .then((users) => res.status(OK).send(users))
@@ -108,10 +110,13 @@ export const login = (req: Request, res: Response, next: NextFunction) => { // a
   const { email, password } = req.body;
   return user.findUserByCredentials(email, password)
     .then((userInfo: any) => {
-      const token = jwt.sign({ _id: userInfo._id }, 'super-strong-secret', { expiresIn: '7d' });
-      //res.cookie('token', token);
-      //res.set({ 'Set-Cookie': `token=${token}` });
-      res.send({ token: token });
+      const token = jwt.sign({ _id: userInfo._id }, process.env.NODE_ENV === 'production' ? JWT_SECRET : 'super-strong-secret');
+      res.cookie('userId', token, {
+        maxAge: 3600000,
+        httpOnly: true,
+        sameSite: true,
+      })
+        .send({ data: userInfo.toJSON() });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {

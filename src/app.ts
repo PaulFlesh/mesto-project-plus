@@ -17,13 +17,17 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+//app.use(cookieParser());
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 
 app.use(cors({
+  credentials: true,
   origin: [
     'http://mesto.students.nomoredomainsmonster.ru',
-    'https://mesto.students.nomoredomainsmonster.ru'
+    'https://mesto.students.nomoredomainsmonster.ru',
+    'http://api.mesto.students.nomoredomainsmonster.ru',
+    'https://api.mesto.students.nomoredomainsmonster.ru'
   ],
 }));
 app.use(requestLogger);
