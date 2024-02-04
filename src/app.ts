@@ -14,10 +14,11 @@ import { createUserValidation, loginValidation } from './utils/validation';
 
 const { PORT = 3001 } = process.env;
 const app = express();
+const cookieParser = require('cookie-parser');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-//app.use(cookieParser());
+app.use(cookieParser());
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 
