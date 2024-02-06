@@ -26,7 +26,8 @@ app.use(cors({
   credentials: true,
   origin: [
     'http://mesto.students.nomoredomainsmonster.ru',
-    'https://mesto.students.nomoredomainsmonster.ru'
+    'https://mesto.students.nomoredomainsmonster.ru',
+    'http://localhost:3001',
   ],
 }));
 app.use(requestLogger);

@@ -17,13 +17,12 @@ export const getUsers = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export const getUser = (req: Request, res: Response, next: NextFunction) => {
-  user.findById(req.params.userId).orFail()
+  user.findById(req.user._id).orFail()
     .then((userInfo) => res.status(OK).send(userInfo))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
         next(new NotFound('Пользователь не найден'));
       } else if (err.name === 'CastError') {
-        console.log(req.params.userId);
         next(new NotFound('Передан невалидный _id'));
       } else {
         next(err);
@@ -32,13 +31,12 @@ export const getUser = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export const getCurrentUser = (req: Request, res: Response, next: NextFunction) => {
-  user.findById(req.params.userId).orFail()
+  user.findById(req.user._id).orFail()
     .then((userInfo) => res.status(OK).send(userInfo))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
         next(new NotFound('Пользователь не найден'));
       } else if (err.name === 'CastError') {
-        console.log(req.params.userId);
         next(new NotFound('Передан невалидный _id'));
       } else {
         next(err);
@@ -75,7 +73,7 @@ export const createUser = (req: Request, res: Response, next: NextFunction) => {
 export const updateUser = (req: Request, res: Response, next: NextFunction) => {
   const { name, about } = req.body;
   user.findByIdAndUpdate(
-    req.params.userId,
+    req.user._id,
     { name, about },
     { new: true, runValidators: true },
   )
@@ -92,7 +90,7 @@ export const updateUser = (req: Request, res: Response, next: NextFunction) => {
 export const updateUserAvatar = (req: Request, res: Response, next: NextFunction) => {
   const { avatar } = req.body;
   user.findByIdAndUpdate(
-    req.params.userId,
+    req.user._id,
     { avatar },
     { new: true, runValidators: true },
   )
@@ -116,7 +114,7 @@ export const login = (req: Request, res: Response, next: NextFunction) => { // a
         httpOnly: true,
         sameSite: true,
       })
-        .send({ data: userInfo.toJSON() });
+        .send(userInfo.toJSON());
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {

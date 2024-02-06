@@ -5,7 +5,7 @@ import Unathorized from '../errors/Unauthorized';
 const { JWT_SECRET } = require('../config');
 
 export default (req: any, res: Response, next: NextFunction) => { // any
-  const token = req.cookies.jwt;
+  const token = req.cookies.userId;
   //const { authorization } = req.headers;
   //if (!authorization || !authorization.startsWith('Bearer ')) {
   //  throw new Unathorized('Необходима авторизация');
